@@ -20,7 +20,7 @@ class Blog(models.Model):
 
     # 제목 노출되는 형식 설정 [카테고리] 제목은 최대 10자까지 노출
     def __str__(self):
-        return f'{self.get_category_display()} {self.title[:10]}'
+        return f'[{self.get_category_display()}] {self.title[:10]}'
 
     class Meta:
         verbose_name = '블로그'
