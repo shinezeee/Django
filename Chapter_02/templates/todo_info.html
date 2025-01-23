@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Todo information</title>
+</head>
+<body>
+ <h1>{{ data.title }}</h1>
+ <h3>{{ data.description }}</h3>
+ <p>시작일 : {{ data.start_date }}</p>
+ <p>마감일 : {{ data.end_date }}</p>
+ <p>완료 여부 : {{ data.is_done }}</p>
+ <a href="{% url 'todo_list' %}"><button>목록으로</button></a>
+</body>
+</html>
