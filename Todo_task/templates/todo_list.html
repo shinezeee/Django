@@ -5,13 +5,27 @@
     <title>Todo List</title>
 </head>
 <body>
- <h1>Todo List</h1>
- <ul>
-    {% for todo in data %}
-      <h3><li><a href="{% url 'todo_info' todo.id %}">{{ todo.title }}</a></li></h3>
-    {% endfor %}
- </ul>
+    <nav>
+        <div style="text-align: right">
+            <a href ="{% url 'signup' %}"><button>회원가입</button></a>
+            {% if request.user.is_authenticated %}
+                <form action="{%  url 'logout' %}" method="POST" style="display: inline">
+                    {% csrf_token %}
+                    <button>로그아웃</button>
+                </form>
+                {{ request.user.username }}
 
+            {% else %}
+             <a href="{%  url 'login' %}"<button>로그인</button></a>
+            {% endif %}
+        </div>
+    </nav>
+    <h1>Todo List</h1>
+     <ul>
+        {% for todo in data %}
+          <h3><ol><li><a href="{% url 'todo_info' todo.id %}">{{ todo.title }}</a></li></ol></h3>
+        {% endfor %}
+     </ul>
 
 </body>
 </html>

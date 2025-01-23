@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sign Up</title>
+</head>
+<body>
+    <nav>
+        <div style="text-align: right">
+            <a href="{% url 'login' %}"><button>로그인</button></a>
+        </div>
+    </nav>  <h1>회원가입</h1>
+      <form method="post">
+         {% csrf_token %}
+         {{ form.as_p }}
+          <button>회원가입</button>
+      </form>
+</body>
+</html>
