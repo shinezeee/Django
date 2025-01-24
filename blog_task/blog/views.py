@@ -2,6 +2,7 @@ from django.contrib.admin.templatetags.admin_list import pagination
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.db.models import Q
+from django.views.decorators.http import require_http_methods
 
 from blog.forms import BlogForm
 from blog.models import Blog
@@ -62,6 +63,7 @@ def blog_update(request, pk):
     return render(request,'blog_update.html', context)
 
 @login_required()
+@require_http_methods(['POST'])
 def blog_delete(request, pk):
     blog = get_object_or_404(Blog, pk=pk,author=request.user)
     blog.delete()
