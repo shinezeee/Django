@@ -60,5 +60,7 @@ def todo_update(request,todo_id):
 # 할 일 삭제
 @login_required()
 def todo_delete(request,todo_id):
-    pass
+    todo = get_object_or_404(Todo, id=todo_id, user =request.user)
+    todo.delete()
+    return redirect(reverse('todo_list'))
 
