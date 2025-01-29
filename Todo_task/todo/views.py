@@ -16,7 +16,7 @@ from django.urls import reverse
 # 할 일 리스트
 @login_required()
 def todo_list (request):
-    todo_list = Todo.objects.all().values_list('id','title')
+    todo_list = Todo.objects.filter(user=request.user).values_list('id','title')
     result  = [{'id' : todo[0],'title': todo[1] }for todo in todo_list]
 
     return render(request,'todo_list.html',{'data':result})
@@ -26,7 +26,7 @@ def todo_list (request):
 def todo_info(request,todo_id):
     todo = get_object_or_404(Todo, id=todo_id)
     context = {
-         'title' : todo.title,
+            'title' : todo.title,
             'info' : todo.info,
             'start_date' : todo.start_date,
             'end_date' : todo.end_date,
@@ -43,7 +43,7 @@ def todo_create(request):
         todo = form.save(commit=False) # 유저추가해야해서 아직 wait
         todo.user = request.user
         todo.save()
-        return redirect(reverse('todo_info',kwargs={'pk':todo.pk}))
+        return redirect(reverse('todo_info',kwargs={'todo_id':todo.pk}))
     context = {
         'form':form
     }

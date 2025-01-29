@@ -1,10 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-
-</body>
-</html>
+{% extends 'base.html'%}
+{% block title %}Todo Create{% endblock %}
+{% block content %}
+    <h1>Todo Create</h1>
+	<div>
+        {% if request.user.is_authenticated %}
+            <form method="POST" action="{% url 'todo_create' %}">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <a href="{% url 'todo_list' %}"><button>취소</button></a> <button type="submit">추가</button>
+            </form>
+        {% endif %}
+    </div>
+{% endblock %}
