@@ -1,10 +1,12 @@
 {% extends 'base.html' %}
 {% block title %}Todo information{% endblock %}
 {% block content %}
- <h1>{{ data.title }}</h1>
- <h3>{{ data.info }}</h3>
- <p>시작일 : {{ data.start_date }}</p>
- <p>마감일 : {{ data.end_date }}</p>
- <p>완료 여부 : {{ data.is_done }}</p>
- <a href="{% url 'todo_list' %}"><button>목록으로</button></a>
+ <h1>{{ todo.title }}</h1>
+ <h3>{{ todo.info }}</h3>
+ <p>시작일 : {{ todo.start_date }}</p>
+ <p>마감일 : {{ todo.end_date }}</p>
+ <p>완료 여부 : {{ todo.is_done }}</p>
+<a href="{% url 'todo_list' %}"><button>목록으로</button></a>
+<a href="{% url 'todo_update' todo.id %}"><button>수정</button></a>
+<a href="{% url 'todo_delete' todo.id %}" onclick="return confirm('정말 삭제하시곘습니까?');"><button>삭제</button></a>
 {% endblock %}
