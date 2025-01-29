@@ -1,0 +1,15 @@
+{% block title %}Todo_Update{% endblock %}
+{% block content %}
+    <h1>Todo Update</h1>
+	<div>
+        {% if request.user.is_authenticated %}
+            <form method="POST">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <a href="{% url 'todo_info' todo.id %}"><button type="button">취소</button></a>
+                <button type="submit">수정</button>
+
+            </form>
+        {% endif %}
+    </div>
+{% endblock %}

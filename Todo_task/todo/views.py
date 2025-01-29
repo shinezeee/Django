@@ -1,4 +1,3 @@
-from typing import Any
 
 from django.contrib.auth.decorators import login_required
 from django.db.models import QuerySet
@@ -6,7 +5,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.http import Http404
 from django.template.context_processors import request
 
-from todo.form import TodoForm
+from todo.form import TodoForm, TodoUpdateform
 from todo.models import Todo
 from django.urls import reverse
 
@@ -26,13 +25,8 @@ def todo_list (request):
 def todo_info(request,todo_id):
     todo = get_object_or_404(Todo, id=todo_id)
     context = {
-            'title' : todo.title,
-            'info' : todo.info,
-            'start_date' : todo.start_date,
-            'end_date' : todo.end_date,
-            'is_done' : todo.is_done,
-    }
-    return render(request,'todo_info.html',{'data':context})
+            'todo' : todo,}
+    return render(request,'todo_info.html', context)
 
 
 # 할 일 추가
@@ -51,10 +45,20 @@ def todo_create(request):
 
 # 할 일 수정
 @login_required()
-def todo_update():
-    pass
+def todo_update(request,todo_id):
+    todo = get_object_or_404(Todo, id=todo_id, user = request.user)
+    form = TodoUpdateform(request.POST or None , instance=todo)
+    if form.is_valid():
+        form.save()
+        return redirect(reverse('todo_info',kwargs={'todo_id':todo.pk}))
+    context = {
+        'form':form,
+        'todo':todo
+    }
+    return render(request,'todo_update.html',context)
 
 # 할 일 삭제
 @login_required()
-def todo_delete():
+def todo_delete(request,todo_id):
     pass
+
