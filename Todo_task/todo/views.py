@@ -1,6 +1,7 @@
 
 from django.contrib.auth.decorators import login_required
-from django.db.models import QuerySet
+from django.core.paginator import Paginator
+from django.db.models import QuerySet, Q
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import Http404
 from django.template.context_processors import request
@@ -15,10 +16,25 @@ from django.urls import reverse
 # 할 일 리스트
 @login_required()
 def todo_list (request):
-    todo_list = Todo.objects.filter(user=request.user).values_list('id','title')
-    result  = [{'id' : todo[0],'title': todo[1] }for todo in todo_list]
+    todo_list = Todo.objects.filter(user=request.user)
 
-    return render(request,'todo_list.html',{'data':result})
+    # 검색 대상 설정
+    q = request.GET.get('q')
+    if q:
+        todo_list = todo_list.filter(
+            Q(title__icontains=q) |
+            Q(info__icontains=q)
+        )
+    # 한 페이지당 10개
+    paginator =Paginator(todo_list, 10)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    context = {
+        'page_obj': page_obj,
+        'q':q,
+    }
+    print(page_obj)
+    return render(request,'todo_list.html',context)
 
 # 특정 할 일 보기
 @login_required()

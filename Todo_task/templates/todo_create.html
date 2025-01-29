@@ -7,7 +7,8 @@
             <form method="POST" action="{% url 'todo_create' %}">
                 {% csrf_token %}
                 {{ form.as_p }}
-                <a href="{% url 'todo_list' %}"><button>취소</button></a> <button type="submit">추가</button>
+                <button type="button" onclick="location.href='{% url 'todo_list' %}'">목록으로</button>
+                <button type="submit">추가</button>
             </form>
         {% endif %}
     </div>
