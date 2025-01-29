@@ -1,31 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Todo List</title>
-</head>
-<body>
-    <nav>
-        <div style="text-align: right">
-            <a href ="{% url 'signup' %}"><button>회원가입</button></a>
-            {% if request.user.is_authenticated %}
-                <form action="{%  url 'logout' %}" method="POST" style="display: inline">
-                    {% csrf_token %}
-                    <button>로그아웃</button>
-                </form>
-                {{ request.user.username }}
-
-            {% else %}
-             <a href="{%  url 'login' %}"<button>로그인</button></a>
-            {% endif %}
-        </div>
-    </nav>
-    <h1>Todo List</h1>
+{% extends 'base.html' %}
+{% block title %}Todo List{% endblock %}
+{% block content %}
+    {% if request.user.is_authenticated %}
+    <h1>{{ request.user.username }}'s Todo List</h1>
+    <a href= "{% url 'todo_create' %}"><button>추가</button></a>
      <ul>
         {% for todo in data %}
-          <h3><ol><li><a href="{% url 'todo_info' todo.id %}">{{ todo.title }}</a></li></ol></h3>
+          <li><a href="{% url 'todo_info' todo.id %}">{{ todo.title }}</a></li>
         {% endfor %}
      </ul>
-
-</body>
-</html>
+    {%endif %}
+{% endblock %}
