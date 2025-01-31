@@ -30,6 +30,7 @@ def todo_list (request):
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
     context = {
+        'object_list': page_obj.object_list,
         'page_obj': page_obj,
         'q':q,
     }

@@ -4,10 +4,10 @@
     <h1>Todo Create</h1>
 	<div>
         {% if request.user.is_authenticated %}
-            <form method="POST" action="{% url 'todo_create' %}">
+            <form method="POST" action="{% url 'cb_todo_create' %}">
                 {% csrf_token %}
                 {{ form.as_p }}
-                <button type="button" onclick="location.href='{% url 'todo_list' %}'">목록으로</button>
+                <button type="button" onclick="location.href='{% url 'cb_todo_list' %}'">목록으로</button>
                 <button type="submit">추가</button>
             </form>
         {% endif %}

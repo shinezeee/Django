@@ -6,7 +6,7 @@
             <form method="POST">
                 {% csrf_token %}
                 {{ form.as_p }}
-                <a href="{% url 'todo_info' todo.id %}"><button type="button">취소</button></a>
+                <a href="{% url 'cb_todo_info' todo.id %}"><button type="button">취소</button></a>
                 <button type="submit">수정</button>
 
             </form>

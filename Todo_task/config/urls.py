@@ -19,8 +19,10 @@ from django.contrib import admin
 from django.urls import path, include
 from django.views.generic import TemplateView
 
+from todo import cb_views
 from todo.views import todo_list, todo_info, todo_create, todo_update, todo_delete
 from users import views as user_views
+
 
 urlpatterns = [
     # FBV
@@ -34,5 +36,8 @@ urlpatterns = [
     path("accounts/", include("django.contrib.auth.urls")),
     path("signup/", user_views.signup, name="signup"),
     path("login/", user_views.login, name="login"),
+
+    #CBV include
+    path('cbv/',include('todo.urls')),
 
 ]

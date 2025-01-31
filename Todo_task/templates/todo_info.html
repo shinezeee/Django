@@ -6,7 +6,10 @@
  <p>시작일 : {{ todo.start_date }}</p>
  <p>마감일 : {{ todo.end_date }}</p>
  <p>완료 여부 : {{ todo.is_done }}</p>
-<a href="{% url 'todo_list' %}"><button>목록으로</button></a>
-<a href="{% url 'todo_update' todo.id %}"><button>수정</button></a>
-<a href="{% url 'todo_delete' todo.id %}" onclick="return confirm('정말 삭제하시곘습니까?');"><button>삭제</button></a>
+<a href="{% url 'cb_todo_list' %}"><button>목록으로</button></a>
+<a href="{% url 'cb_todo_update' todo.id %}"><button>수정</button></a>
+<form action="{% url 'cb_todo_delete' todo.id %}" method="post" style="display:inline;">
+    {% csrf_token %}
+    <button type="submit" onclick="return confirm('정말 삭제하시겠습니까?');">삭제</button>
+</form>
 {% endblock %}
