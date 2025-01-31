@@ -36,6 +36,7 @@ urlpatterns = [
     path("accounts/", include("django.contrib.auth.urls")),
     path("signup/", user_views.signup, name="signup"),
     path("login/", user_views.login, name="login"),
+    path("logout/",user_views.logout, name="logout"),
 
     #CBV include
     path('cbv/',include('todo.urls')),
