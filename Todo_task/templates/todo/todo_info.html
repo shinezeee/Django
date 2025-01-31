@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'todo/base.html' %}
 {% block title %}Todo information{% endblock %}
 {% block content %}
  <h1>{{ todo.title }}</h1>
@@ -12,4 +12,5 @@
     {% csrf_token %}
     <button type="submit" onclick="return confirm('정말 삭제하시겠습니까?');">삭제</button>
 </form>
+
 {% endblock %}

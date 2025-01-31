@@ -35,7 +35,7 @@ def todo_list (request):
         'q':q,
     }
     print(page_obj)
-    return render(request,'todo_list.html',context)
+    return render(request,'todo/todo_list.html',context)
 
 # 특정 할 일 보기
 @login_required()
@@ -43,7 +43,7 @@ def todo_info(request,todo_id):
     todo = get_object_or_404(Todo, id=todo_id)
     context = {
             'todo' : todo,}
-    return render(request,'todo_info.html', context)
+    return render(request,'todo/todo_info.html', context)
 
 
 # 할 일 추가
@@ -54,11 +54,11 @@ def todo_create(request):
         todo = form.save(commit=False) # 유저추가해야해서 아직 wait
         todo.user = request.user
         todo.save()
-        return redirect(reverse('todo_info',kwargs={'todo_id':todo.pk}))
+        return redirect(reverse('todo/todo_info',kwargs={'todo_id':todo.pk}))
     context = {
         'form':form
     }
-    return render(request, 'todo_create.html',context)
+    return render(request, 'todo/todo_create.html',context)
 
 # 할 일 수정
 @login_required()
@@ -67,17 +67,17 @@ def todo_update(request,todo_id):
     form = TodoUpdateform(request.POST or None , instance=todo)
     if form.is_valid():
         form.save()
-        return redirect(reverse('todo_info',kwargs={'todo_id':todo.pk}))
+        return redirect(reverse('todo/todo_info',kwargs={'todo_id':todo.pk}))
     context = {
         'form':form,
         'todo':todo
     }
-    return render(request,'todo_update.html',context)
+    return render(request,'todo/todo_update.html',context)
 
 # 할 일 삭제
 @login_required()
 def todo_delete(request,todo_id):
     todo = get_object_or_404(Todo, id=todo_id, user =request.user)
     todo.delete()
-    return redirect(reverse('todo_list'))
+    return redirect(reverse('todo/todo_list'))
 
