@@ -1,8 +1,10 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
     <title>{% block title %}Todo List{% endblock%}</title>
+    <link href="{% static 'css/bootstrap.css' rel='stylesheet' %}">
 </head>
 <body>
     <nav>
