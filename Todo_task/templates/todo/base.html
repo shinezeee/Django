@@ -10,11 +10,7 @@
 <body>
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
         <div class="container-fluid">
-            <a class="navbar-brand" href="{% url 'cb_todo_list' %}">📋 Todo List</a>
-            <form method="GET" action="{% url 'cb_todo_list' %}" class="d-flex ms-3">
-                <input class="form-control me-2" type="text" name="q" placeholder="검색어 입력" value="{{ request.GET.q }}">
-                <button type="submit" class="btn btn-outline-success">🔎</button>
-            </form>
+            <a class="navbar-brand" href="{% url 'todo_home' %}">📋 Todo List</a>
 
             <div class="collapse navbar-collapse justify-content-end">
                 {% if request.user.is_authenticated %}
@@ -26,30 +22,11 @@
 
             {% else %}
              <a href ="{% url 'signup' %}"><button class="btn btn-outline-success me-2" type="button">회원가입</button></a>
-             <a href="{%  url 'login' %}"><button>로그인</button></a>
+             <a href="{%  url 'login' %}"><button class="btn btn-outline-success me-2">로그인</button></a>
             {% endif %}
             </div>
         </div>
     </nav>
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            let searchToggle = document.getElementById("search-toggle");
-            let searchForm = document.getElementById("search-form");
-
-            if (searchToggle && searchForm) {
-                searchToggle.addEventListener("click", function () {
-                    if (searchForm.style.display === "none" || searchForm.style.display === "") {
-                        searchForm.style.display = "flex";
-                        searchForm.querySelector("input").focus();
-                    } else {
-                        searchForm.style.display = "none";
-                    }
-                });
-            } else {
-                console.error("검색 토글 버튼 또는 폼을 찾을 수 없습니다.");
-            }
-        });
-    </script>
     <script src="{% static "js/bootstrap.bundle.js" %}"></script>
     {% block content %}{% endblock %}
 </body>

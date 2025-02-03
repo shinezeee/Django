@@ -1,20 +1,34 @@
+{% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
     <title>Login</title>
+    <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet">
 </head>
-<body>
-    <nav>
-        <div style="text-align: right">
-            <a href ="{% url 'signup' %}"><button>회원가입</button></a></div></nav>
-    <h1>로그인</h1>
-    <form method="POST" action="{% url 'login' %}">
-        {% csrf_token %}
-        {{ form.as_p }}
+<body class="container d-flex justify-content-center align-items-center vh-100">
+    <div class="card p-4 shadow-sm" style="width: 400px;">
+        <h2 class="text-center mb-3">🔐 로그인</h2>
+        <form method="POST" action="{% url 'login' %}">
+            {% csrf_token %}
 
-        <button type="submit">로그인</button>
-    </form>
+            <div class="mb-3">
+                <label for="id_username" class="form-label">아이디</label>
+                <input type="text" name="username" id="id_username" class="form-control" required>
+            </div>
 
+            <div class="mb-3">
+                <label for="id_password" class="form-label">비밀번호</label>
+                <input type="password" name="password" id="id_password" class="form-control" required>
+            </div>
+
+            <button type="submit" class="btn btn-success w-100">로그인</button>
+        </form>
+        <hr>
+        <p class="text-center">
+            계정이 없나요? <a href="{% url 'signup' %}" class="text-decoration-none">회원가입</a>
+        </p>
+    </div>
+    <script src="{% static 'js/bootstrap.bundle.js' %}"></script>
 </body>
 </html>

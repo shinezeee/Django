@@ -13,7 +13,7 @@ from todo.form import CommentForm
 from todo.models import Todo, Comment
 
 # 할 일 목록
-class TodoListView(ListView):
+class TodoListView(LoginRequiredMixin,ListView):
     queryset = Todo.objects.all()
     template_name = 'todo/todo_list.html'
     paginate_by = 10  #페이지네이션
@@ -33,7 +33,7 @@ class TodoListView(ListView):
         return queryset
 
 # 할 일 상세보기 (댓글포함)
-class TodoDetailView(DetailView):
+class TodoDetailView(LoginRequiredMixin,DetailView):
     model = Todo
     template_name = 'todo/todo_info.html'
 

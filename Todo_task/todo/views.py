@@ -81,3 +81,9 @@ def todo_delete(request,todo_id):
     todo.delete()
     return redirect(reverse('todo/todo_list'))
 
+# 에러 페이지
+def custom_404_view(request, exception):
+    return render(request, '404.html', status=404)
+
+def todo_home(request):
+    return render(request,'todo_home.html')

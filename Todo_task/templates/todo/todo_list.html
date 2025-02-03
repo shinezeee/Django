@@ -4,8 +4,11 @@
     <div class="container text-center" style="max-width: 500px;">
         {% if request.user.is_authenticated %}
         <h1 class="my-4">📋 {{ request.user.username }}'s Todo List 📋</h1>
-        <a href= "{% url 'cb_todo_create' %}" class="btn btn-success mb-3">⊕</a>
-
+        <a href= "{% url 'cb_todo_create' %}" class="btn btn-success mb-3">➕</a>
+        <form method="GET" action="{% url 'cb_todo_list' %}" class="d-flex ms-3 mb-3">
+                <input class="form-control me-2" type="text" name="q" placeholder="검색어 입력" value="{{ request.GET.q }}">
+                <button type="submit" class="btn btn-outline-success">🔎</button>
+        </form>
          <ul class="list-group ">
             {% for todo in object_list %}
               <li class="list-group-item list-group-item-action"><a href="{% url 'cb_todo_info' todo.id %}" class="text-decoration-none text-dark link-success">{{ todo.title }}</a></li>

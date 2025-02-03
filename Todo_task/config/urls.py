@@ -20,12 +20,15 @@ from django.urls import path, include
 from django.views.generic import TemplateView
 
 from todo import cb_views
-from todo.views import todo_list, todo_info, todo_create, todo_update, todo_delete
+from todo.views import todo_list, todo_info, todo_create, todo_update, todo_delete, todo_home
 from users import views as user_views
+from todo.views import custom_404_view
 
+handler404 = "todo.views.custom_404_view"
 
 urlpatterns = [
     # FBV
+    path('', todo_home, name='todo_home'),
     path("todo/", todo_list, name="todo_list"),
     path("todo/create/",todo_create, name="todo_create"),
     path("todo/<int:todo_id>/",todo_info, name="todo_info"),
