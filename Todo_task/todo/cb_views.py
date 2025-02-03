@@ -28,7 +28,7 @@ class TodoListView(ListView):
         if q:
             queryset = queryset.filter(   # 검색
                 Q(title__icontains=q) |
-                Q(content__icontains=q)
+                Q(info__icontains=q)
                 )
         return queryset
 

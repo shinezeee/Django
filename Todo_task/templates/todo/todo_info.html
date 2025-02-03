@@ -1,16 +1,99 @@
 {% extends 'todo/base.html' %}
 {% block title %}Todo information{% endblock %}
 {% block content %}
- <h1>{{ todo.title }}</h1>
- <h3>{{ todo.info }}</h3>
- <p>시작일 : {{ todo.start_date }}</p>
- <p>마감일 : {{ todo.end_date }}</p>
- <p>완료 여부 : {{ todo.is_done }}</p>
-<a href="{% url 'cb_todo_list' %}"><button>목록으로</button></a>
-<a href="{% url 'cb_todo_update' todo.id %}"><button>수정</button></a>
-<form action="{% url 'cb_todo_delete' todo.id %}" method="post" style="display:inline;">
-    {% csrf_token %}
-    <button type="submit" onclick="return confirm('정말 삭제하시겠습니까?');">삭제</button>
-</form>
+<div class="container mt-5">
+    <div class="card shadow-sm p-4 text-center">
+        <h1 class="text-center">{{ todo.title }}</h1>
+         <div class="text-center">
+                <span class="badge {% if todo.is_done %}bg-success{% else %}bg-secondary{% endif %} p-2">
+                    {% if todo.is_done %}✅ 완료{% else %}🚧 진행 중{% endif %}
+                </span>
+            </div>
+        <h3 class="text-muted text-center pt-3">{{ todo.info }}</h3>
+        <div class="d-flex justify-content-center gap-3 mt-3">
+            <div class="text-center">
+                <span class="badge bg-dark p-2">📅 시작일</span>
+                <p class="fw-bold mt-2 text-dark">{{ todo.start_date }}</p>
+            </div>
+            <div class="text-center">
+                <span class="badge bg-danger p-2">⏳ 마감일</span>
+                <p class="fw-bold mt-2 text-danger">{{ todo.end_date }}</p>
+            </div>
 
+        </div>
+        <div class="d-flex justify-content-center gap-2">
+            <a href="{% url 'cb_todo_list' %}" class="btn btn-secondary">목록으로</a>
+            <a href="{% url 'cb_todo_update' todo.id %}" class="btn btn-primary">수정</a>
+            <form action="{% url 'cb_todo_delete' todo.id %}" method="post" style="display:inline;">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger" onclick="return confirm('정말 삭제하시겠습니까?');">삭제</button>
+            </form>
+        </div>
+    </div>
+
+    <hr>
+
+    <h2 class="mt-4">💬 댓글</h2>
+    <ul class="list-group">
+        {% for comment in page_obj %}
+            <li class="list-group-item">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <strong>{{ comment.user.username }}</strong>
+                        <span class="text-muted small">({{ comment.created_at|date:"Y-m-d H:i" }})</span>
+                        <p class="mt-2">{{ comment.message }}</p>
+                    </div>
+
+                    {% if comment.user == request.user or request.user.is_superuser %}
+                        <div class="d-flex gap-2">
+                            <a href="{% url 'comment_update' comment.id %}" class="btn btn-sm btn-outline-primary">수정</a>
+                            <form action="{% url 'comment_delete' comment.id %}" method="post" style="display:inline;">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-sm btn-outline-danger" onclick="return confirm('정말 삭제하시겠습니까?');">삭제</button>
+                            </form>
+                        </div>
+                    {% endif %}
+                </div>
+            </li>
+        {% empty %}
+            <li class="list-group-item text-center text-muted">아직 댓글이 없습니다.</li>
+        {% endfor %}
+    </ul>
+
+    <nav class="mt-3">
+        <ul class="pagination justify-content-center">
+            {% if page_obj.has_previous %}
+                <li class="page-item"><a class="page-link" href="?page=1">« 처음</a></li>
+                <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">이전</a></li>
+            {% endif %}
+
+            {% for i in page_obj.paginator.page_range %}
+                {% if page_obj.number == i %}
+                    <li class="page-item active"><span class="page-link">{{ i }}</span></li>
+                {% elif i > page_obj.number|add:'-3' and i < page_obj.number|add:'3' %}
+                    <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+                {% endif %}
+            {% endfor %}
+
+            {% if page_obj.has_next %}
+                <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">다음</a></li>
+                <li class="page-item"><a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">마지막 »</a></li>
+            {% endif %}
+        </ul>
+    </nav>
+
+    <hr>
+
+    <!-- 댓글 입력 폼 -->
+    {% if request.user.is_authenticated %}
+        <h3 class="mt-4">📝 댓글 작성</h3>
+        <form method="post" action="{% url 'comment_create' todo.pk %}" class="card p-3 shadow-sm">
+            {% csrf_token %}
+            {{ comment_form.as_p }}
+            <button type="submit" class="btn btn-success mt-2">댓글 작성</button>
+        </form>
+    {% else %}
+        <p class="text-muted text-center mt-3">댓글을 작성하려면 <a href="{% url 'login' %}">로그인</a>하세요.</p>
+    {% endif %}
+</div>
 {% endblock %}

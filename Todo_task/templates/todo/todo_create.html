@@ -1,15 +1,47 @@
 {% extends 'todo/base.html' %}
-{% block title %}Todo Create{% endblock %}
+{% block title %}할 일 추가{% endblock %}
 {% block content %}
-    <h1>Todo Create</h1>
-	<div>
-        {% if request.user.is_authenticated %}
-            <form method="POST" action="{% url 'cb_todo_create' %}">
-                {% csrf_token %}
-                {{ form.as_p }}
-                <button type="button" onclick="location.href='{% url 'cb_todo_list' %}'">목록으로</button>
-                <button type="submit">추가</button>
-            </form>
-        {% endif %}
+<div class="container mt-5">
+    <div class="card shadow-sm p-4 text-center">
+        <h1 class="text-center">➕</h1>
+
+        <form method="POST" action="{% url 'cb_todo_create' %}" class="needs-validation">
+            {% csrf_token %}
+            <div class="d-flex flex-column align-items-center">
+
+                <!-- 제목 입력 필드 -->
+                <div class="mb-3 text-center w-50">
+                    <input class="form-control form-control-lg" type="text" name="title"
+                           placeholder="📌 할 일" value="{{ form.title.value|default:'' }}">
+                </div>
+
+                <!-- 내용 입력 필드 -->
+                <div class="mb-3 text-center w-50">
+                    <textarea class="form-control" name="info" rows="3"
+                              placeholder="📝 내용">{{ form.info.value|default:'' }}</textarea>
+                </div>
+
+                <!-- 시작일 & 마감일 -->
+                <div class="d-flex justify-content-center gap-3 mt-3">
+                    <div class="text-center">
+                        <label for="id_start_date" class="badge bg-dark p-2">📅 시작일</label>
+                        <input type="date" name="start_date" id="id_start_date"
+                               class="form-control text-center mt-2" value="{{ form.start_date.value|default:'' }}">
+                    </div>
+                    <div class="text-center">
+                        <label for="id_end_date" class="badge bg-danger p-2">⏳ 마감일</label>
+                        <input type="date" name="end_date" id="id_end_date"
+                               class="form-control text-center mt-2" value="{{ form.end_date.value|default:'' }}">
+                    </div>
+                </div>
+            </div>
+
+            <!-- 버튼 그룹 -->
+            <div class="d-flex justify-content-center gap-2 mt-4">
+                <a href="{% url 'cb_todo_list' %}" class="btn btn-secondary">목록으로</a>
+                <button type="submit" class="btn btn-success">추가</button>
+            </div>
+        </form>
     </div>
+</div>
 {% endblock %}

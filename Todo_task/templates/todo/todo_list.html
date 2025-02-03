@@ -1,22 +1,19 @@
 {% extends 'todo/base.html' %}
 {% block title %}Todo List{% endblock %}
 {% block content %}
-    {% if request.user.is_authenticated %}
-    <h1>{{ request.user.username }}'s Todo List</h1>
-    <a href= "{% url 'cb_todo_create' %}"><button>추가</button></a>
-    <form method="GET">
-        <label>
-            <input type="text" name="q" placeholder="검색어 입력" value="{{ request.GET.q }}">
-        </label>
-        <button type="submit">검색</button>
-    </form>
+    <div class="container text-center" style="max-width: 500px;">
+        {% if request.user.is_authenticated %}
+        <h1 class="my-4">📋 {{ request.user.username }}'s Todo List 📋</h1>
+        <a href= "{% url 'cb_todo_create' %}" class="btn btn-success mb-3">⊕</a>
 
-     <ul>
-        {% for todo in object_list %}
-          <li><a href="{% url 'cb_todo_info' todo.id %}">{{ todo.title }}</a></li>
-        {% empty %}
-        <li>할 일이 없습니다.</li>
-        {% endfor %}
-     </ul>
-    {%endif %}
+         <ul class="list-group ">
+            {% for todo in object_list %}
+              <li class="list-group-item list-group-item-action"><a href="{% url 'cb_todo_info' todo.id %}" class="text-decoration-none text-dark link-success">{{ todo.title }}</a></li>
+            {% empty %}
+            <li class="list-group-item">할 일이 없습니다.</li>
+            {% endfor %}
+         </ul>
+            {% include 'todo/pagination.html' %}
+        {%endif %}
+    </div>
 {% endblock %}

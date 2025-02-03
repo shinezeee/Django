@@ -4,26 +4,53 @@
 <head>
     <meta charset="UTF-8">
     <title>{% block title %}Todo List{% endblock%}</title>
-    <link href="{% static 'css/bootstrap.css' rel='stylesheet' %}">
+    <link href="{% static 'css/bootstrap.css' %}" rel='stylesheet'>
+
 </head>
 <body>
-    <nav>
-        <div style="text-align: right">
-            {% if request.user.is_authenticated %}
-            <a href ="{% url 'signup' %}"><button>회원가입</button></a>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="{% url 'cb_todo_list' %}">📋 Todo List</a>
+            <form method="GET" action="{% url 'cb_todo_list' %}" class="d-flex ms-3">
+                <input class="form-control me-2" type="text" name="q" placeholder="검색어 입력" value="{{ request.GET.q }}">
+                <button type="submit" class="btn btn-outline-success">🔎</button>
+            </form>
+
+            <div class="collapse navbar-collapse justify-content-end">
+                {% if request.user.is_authenticated %}
+                <span class="fw-bold me-3">{{ request.user.username }}</span>
                 <form action="{%  url 'logout' %}" method="POST" style="display: inline">
                     {% csrf_token %}
-                    <button>로그아웃</button>
+                    <button class="btn btn-outline-success me-2" type="submit">로그아웃</button>
                 </form>
-                {{ request.user.username }}
 
             {% else %}
+             <a href ="{% url 'signup' %}"><button class="btn btn-outline-success me-2" type="button">회원가입</button></a>
              <a href="{%  url 'login' %}"><button>로그인</button></a>
             {% endif %}
+            </div>
         </div>
     </nav>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            let searchToggle = document.getElementById("search-toggle");
+            let searchForm = document.getElementById("search-form");
+
+            if (searchToggle && searchForm) {
+                searchToggle.addEventListener("click", function () {
+                    if (searchForm.style.display === "none" || searchForm.style.display === "") {
+                        searchForm.style.display = "flex";
+                        searchForm.querySelector("input").focus();
+                    } else {
+                        searchForm.style.display = "none";
+                    }
+                });
+            } else {
+                console.error("검색 토글 버튼 또는 폼을 찾을 수 없습니다.");
+            }
+        });
+    </script>
     <script src="{% static "js/bootstrap.bundle.js" %}"></script>
     {% block content %}{% endblock %}
-
 </body>
 </html>
