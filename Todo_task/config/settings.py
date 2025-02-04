@@ -30,10 +30,6 @@ ALLOWED_HOSTS = []
 
 # Application definition
 
-CUSTOM_APPS = [
-    'todo',
-    'users',
-]
 
 DJANGO_APPS = [
     "django.contrib.admin",
@@ -42,6 +38,10 @@ DJANGO_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+]
+CUSTOM_APPS = [
+    'todo',
+    'users',
 ]
 
 THIRD_PARTY_APPS = [
@@ -136,13 +136,13 @@ STATICFILES_DIRS = [
 STATIC_ROOT = BASE_DIR / '.static_root'
 
 # media
-MEDIA_URL = 'media/'
+MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
-
+DEFAULT_THUMBNAIL = 'thumbnails/default.png'
 
 LOGIN_REDIRECT_URL = "/cbv/todo/" # 로그인 후 할일 페이지 표시
 LOGOUT_REDIRECT_URL = "/login/" # 로그아웃 후 로그인 페이지 표시
@@ -152,7 +152,7 @@ LOGIN_URL = "/login/"
 # Summernote 설정
 SUMMERNOTE_CONFIG = {
     # HTML 태그 또는 JS를 수정하지 못하도록 iframe 설정
-    'iframe': True,
+    'iframe': False,
 
     'summernote': {
         # airMode 비활성화: 툴바를 항상 표시하도록 설정
@@ -170,7 +170,7 @@ SUMMERNOTE_CONFIG = {
             ['para', ['ul', 'ol', 'paragraph']],       # 문단 설정: 글머리 기호, 번호 매기기, 문단
             ['table', ['table']],                      # 표 삽입
             ['insert', ['link', 'picture']],           # 삽입 기능: 링크, 그림
-            ['view', ['fullscreen']],                  # 보기 설정: 전체 화면
+            #['view', ['fullscreen']],                  # 보기 설정: 전체 화면
         ],
 
         # 에디터 언어 정의

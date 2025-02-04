@@ -9,7 +9,7 @@ from django.urls import reverse_lazy
 from django.views import View
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 
-from todo.form import CommentForm
+from todo.form import CommentForm, TodoForm, TodoUpdateForm
 from todo.models import Todo, Comment
 
 # 할 일 목록
@@ -57,23 +57,26 @@ class TodoDetailView(LoginRequiredMixin,DetailView):
 # 할 일 추가
 class TodoCreateView(LoginRequiredMixin,CreateView):
     model = Todo
-    fields = ['title','info','start_date','end_date']
     template_name = 'todo/todo_create.html'
+    form_class = TodoForm
 
-    def form_valid(self, form): #폼이 있어야 호출 가능
+    def form_valid(self, form):
         self.object = form.save(commit=False)
         self.object.user = self.request.user
         self.object.save()
-        return HttpResponseRedirect(self.get_success_url())
+        return redirect('cb_todo_info', pk=self.object.pk)
+
 
     def get_success_url(self):
-        return reverse_lazy('cb_todo_info',kwargs={'pk':self.object.pk})
+        if self.object and self.object.pk:
+            return reverse_lazy('cb_todo_info', kwargs={'pk': self.object.pk})
+        return reverse_lazy('cb_todo_list')  # 오류 방지를 위해 기본적으로 리스트 페이지로 이동
 
 # 할 일 수정
 class TodoUpdateView(LoginRequiredMixin,UpdateView):
     model = Todo
     template_name = 'todo/todo_update.html'
-    fields = ['title','info','start_date','end_date','is_done']
+    form_class = TodoUpdateForm
 
     def get_object(self, queryset=None):
         obj = super().get_object(queryset)

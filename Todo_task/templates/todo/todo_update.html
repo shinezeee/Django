@@ -9,22 +9,25 @@
             {% csrf_token %}
             <div class="d-flex flex-column align-items-center">
 
-                <div class="mb-3 text-center w-50">
+                <div class="mb-3 text-center w-75">
                     <input class="form-control form-control-lg" type="text" name="title"
                            value="{{ todo.title }}">
                 </div>
 
+                <!-- 진행 상태 버튼 -->
                 <div class="mb-3 w-50 text-center">
                     <button type="button" id="status-toggle"
                             class="btn {% if todo.is_done %}btn-success{% else %}btn-secondary{% endif %} btn-sm"
                             onclick="toggleStatus()">
                         {% if todo.is_done %}✅ 완료{% else %}🚧 진행 중{% endif %}
                     </button>
-                    {{ form.is_done.as_hidden }}
+
+                    <!-- 실제 데이터 저장용 숨겨진 input -->
+                    <input type="hidden" name="is_done" id="id_is_done" value="{% if todo.is_done %}True{% else %}False{% endif %}">
                 </div>
 
-                <div class="mb-3 text-center w-50">
-                    <textarea class="form-control" name="info" id="id_info" rows="3">{{ todo.info }}</textarea>
+                <div class="mb-3 text-center w-75">
+                    {{ form.info }}
                 </div>
 
                 <div class="d-flex justify-content-center gap-3 mt-3">
@@ -47,10 +50,12 @@
         </form>
     </div>
 </div>
+
+<!-- JavaScript -->
 <script>
 function toggleStatus() {
     let statusBtn = document.getElementById("status-toggle");
-    let isDoneField = document.getElementById("id_is_done");  // Django가 자동 생성하는 id
+    let isDoneField = document.getElementById("id_is_done");
 
     if (isDoneField.value === "True") {
         isDoneField.value = "False";

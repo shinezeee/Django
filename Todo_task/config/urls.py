@@ -23,6 +23,8 @@ from todo import cb_views
 from todo.views import todo_list, todo_info, todo_create, todo_update, todo_delete, todo_home
 from users import views as user_views
 from todo.views import custom_404_view
+from django.conf import settings
+from django.conf.urls.static import static
 
 handler404 = "todo.views.custom_404_view"
 
@@ -40,8 +42,11 @@ urlpatterns = [
     path("signup/", user_views.signup, name="signup"),
     path("login/", user_views.login, name="login"),
     path("logout/",user_views.logout, name="logout"),
-
+    path('summernote/', include('django_summernote.urls')),
     #CBV include
     path('cbv/',include('todo.urls')),
 
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

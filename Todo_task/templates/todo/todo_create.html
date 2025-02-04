@@ -17,8 +17,7 @@
 
                 <!-- 내용 입력 필드 -->
                 <div class="mb-3 text-center w-50">
-                    <textarea class="form-control" name="info" rows="3"
-                              placeholder="📝 내용">{{ form.info.value|default:'' }}</textarea>
+                    {{ form.info }}
                 </div>
 
                 <!-- 시작일 & 마감일 -->
@@ -42,6 +41,7 @@
                 <button type="submit" class="btn btn-success">추가</button>
             </div>
         </form>
+        {{ form.media }}
     </div>
 </div>
 {% endblock %}
