@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django_summernote.admin import SummernoteModelAdmin
 
 from todo.models import Todo, Comment
 
@@ -10,12 +11,13 @@ class CommentInline(admin.TabularInline):
 
 
 @admin.register(Todo)
-class TodoAdmin(admin.ModelAdmin):
+class TodoAdmin(SummernoteModelAdmin):
     list_display = ('id','user','title', 'info','is_done','start_date','end_date')
     list_filter = ('is_done',)
     search_fields = ('title',)
     ordering = ('-start_date',)
     list_display_links = ('title',)
+    summernote_fields = ('info',)
     fieldsets = (
         ('Todo Info',{'fields' : ('user','title','info', 'is_done')}),
         ('Data Range',{'fields' : ('start_date', 'end_date')}),
