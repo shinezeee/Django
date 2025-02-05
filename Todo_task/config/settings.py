@@ -21,13 +21,21 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-with open(BASE_DIR / 'secrets.json', 'r') as f:
-    secrets = json.load(f)
-SECRET_KEY = secrets["SECRET_KEY"]
-DEBUG = bool(secrets["DEBUG"])
+# `secrets.json` 파일 경로 설정
+secrets_path = BASE_DIR / '.config_secret' / 'secret.json'
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# 파일이 존재하는지 확인 후 로드
+if secrets_path.exists():
+    with open(secrets_path, 'r') as f:
+        secrets = json.load(f)
+    SECRET_KEY = secrets.get("SECRET_KEY", "django-insecure-기본값")
+    DEBUG = secrets.get("DEBUG", True)
+else:
+    print("⚠️ Warning: .config_secret/secret.json 파일이 없습니다. 기본 설정을 사용합니다.")
+    SECRET_KEY = "django-insecure-기본값"
+    DEBUG = True  # 개발환경에서는 True, 배포 시 False로 설정
+
+
 
 ALLOWED_HOSTS = []
 
@@ -197,3 +205,6 @@ SUMMERNOTE_CONFIG = {
     # 첨부파일의 절대경로 URI 사용 설정
     'attachment_absolute_uri': True,
 }
+
+# auth
+AUTH_USER_MODEL = 'users.User'
