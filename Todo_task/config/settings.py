@@ -24,18 +24,16 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # `secrets.json` 파일 경로 설정
 secrets_path = BASE_DIR / '.config_secret' / 'secret.json'
 
-# 파일이 존재하는지 확인 후 로드
-if secrets_path.exists():
-    with open(secrets_path, 'r') as f:
-        secrets = json.load(f)
-    SECRET_KEY = secrets.get("SECRET_KEY", "django-insecure-기본값")
-    DEBUG = secrets.get("DEBUG", True)
-else:
-    print("⚠️ Warning: .config_secret/secret.json 파일이 없습니다. 기본 설정을 사용합니다.")
-    SECRET_KEY = "django-insecure-기본값"
-    DEBUG = True  # 개발환경에서는 True, 배포 시 False로 설정
+with open(BASE_DIR / '.config_secret'/'secret.json') as f:
+    config_secret_str = f.read()
+
+SECRET= json.loads(config_secret_str)
+
+SECRET_KEY = SECRET['DJANGO_SECRET_KEY']
 
 
+# SECURITY WARNING: don't run with debug turned on in production!
+DEBUG = True
 
 ALLOWED_HOSTS = []
 
@@ -208,3 +206,13 @@ SUMMERNOTE_CONFIG = {
 
 # auth
 AUTH_USER_MODEL = 'users.User'
+
+
+
+# Email
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.naver.com'
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+EMAIL_HOST_USER = SECRET['EMAIL']['USER']
+EMAIL_HOST_PASSWORD = SECRET['EMAIL']['PASSWORD']

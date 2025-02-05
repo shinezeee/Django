@@ -38,14 +38,14 @@ urlpatterns = [
     path("todo/<int:todo_id>/delete", todo_delete, name="todo_delete"),
 
     path("admin/", admin.site.urls),
-    path("accounts/", include("django.contrib.auth.urls")),
-    path("signup/", user_views.signup, name="signup"),
-    path("login/", user_views.login, name="login"),
-    path("logout/",user_views.logout, name="logout"),
+    # path("accounts/", include("django.contrib.auth.urls")),
+    # path("signup/", user_views.signup, name="signup"),
+    # path("login/", user_views.login, name="login"),
+    # path("logout/",user_views.logout, name="logout"),
     path('summernote/', include('django_summernote.urls')),
     #CBV include
     path('cbv/',include('todo.urls')),
-
+    path('users/', include('users.urls')),
 ]
 
 if settings.DEBUG:
