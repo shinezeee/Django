@@ -12,29 +12,13 @@
         <h2 class="text-center mb-3">📝 회원가입</h2>
         <form method="POST">
             {% csrf_token %}
+            {{ form.as_p }}
 
-            <div class="mb-3">
-                <label for="id_username" class="form-label">아이디</label>
-                <input type="text" name="username" id="id_username" class="form-control" required>
-            </div>
-
-            <div class="mb-3">
-                <label for="id_password1" class="form-label">비밀번호</label>
-                <input type="password" name="password1" id="id_password1" class="form-control" required>
-            </div>
-
-            <div class="mb-3">
-                <label for="id_password2" class="form-label">비밀번호 확인</label>
-                <input type="password" name="password2" id="id_password2" class="form-control" required>
-            </div>
-
-            <button type="submit" class="btn btn-success w-100"
-            onclick="return confirm('회원가입이 완료되었습니다! 로그인 페이지로 이동할까요?') ? location.href='{% url 'login' %}' : false;">
-                회원가입</button>
+            <button type="submit" class="btn btn-success w-100">회원가입</button>
         </form>
         <hr>
         <p class="text-center">
-            이미 계정이 있나요? <a href="{% url 'login' %}" class="text-decoration-none">로그인</a>
+            이미 계정이 있나요? <a href="{% url 'cbv_login' %}" class="text-decoration-none">로그인</a>
         </p>
     </div>
     <script src="{% static 'js/bootstrap.bundle.js' %}"></script>

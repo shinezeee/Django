@@ -9,24 +9,30 @@
 <body class="container d-flex justify-content-center align-items-center vh-100">
     <div class="card p-4 shadow-sm" style="width: 400px;">
         <h2 class="text-center mb-3">🔐 로그인</h2>
-        <form method="POST" action="{% url 'login' %}">
+        <form method="POST" action="{% url 'cbv_login' %}">
             {% csrf_token %}
 
             <div class="mb-3">
                 <label for="id_username" class="form-label">아이디</label>
-                <input type="text" name="username" id="id_username" class="form-control" required>
+                <input type="text" name="username" id="id_username" placeholder="이메일을 입력하세요." class="form-control" required>
             </div>
 
             <div class="mb-3">
                 <label for="id_password" class="form-label">비밀번호</label>
-                <input type="password" name="password" id="id_password" class="form-control" required>
+                <input type="password" name="password" id="id_password" placeholder="비밀번호를 입력하세요." class="form-control" required>
             </div>
 
             <button type="submit" class="btn btn-success w-100">로그인</button>
+
+            {% if form.errors %}
+            <div class="alert alert-danger">
+                <strong>❌ 로그인 실패:</strong> 아이디 또는 비밀번호가 올바르지 않습니다.
+            </div>
+            {% endif %}
         </form>
         <hr>
         <p class="text-center">
-            계정이 없나요? <a href="{% url 'signup' %}" class="text-decoration-none">회원가입</a>
+            계정이 없나요? <a href="{% url 'cbv_signup' %}" class="text-decoration-none">회원가입</a>
         </p>
     </div>
     <script src="{% static 'js/bootstrap.bundle.js' %}"></script>

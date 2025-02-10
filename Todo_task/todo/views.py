@@ -86,4 +86,4 @@ def custom_404_view(request, exception):
     return render(request, '404.html', status=404)
 
 def todo_home(request):
-    return render(request,'todo_home.html')
+    return render(request,'todo/todo_home.html')

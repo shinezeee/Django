@@ -154,9 +154,9 @@ MEDIA_ROOT = BASE_DIR / 'media'
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 DEFAULT_THUMBNAIL = 'thumbnails/default.png'
 
-LOGIN_REDIRECT_URL = "/cbv/todo/" # 로그인 후 할일 페이지 표시
-LOGOUT_REDIRECT_URL = "/login/" # 로그아웃 후 로그인 페이지 표시
-LOGIN_URL = "/login/"
+LOGIN_URL = "/users/login/"
+LOGIN_REDIRECT_URL = "/cbv/todo/" # 로그인 후 할일 표시
+LOGOUT_REDIRECT_URL = "/" # 로그아웃 후 로그인 페이지 표시
 
 
 # Summernote 설정
@@ -216,3 +216,4 @@ EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 EMAIL_HOST_USER = SECRET['EMAIL']['USER']
 EMAIL_HOST_PASSWORD = SECRET['EMAIL']['PASSWORD']
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER

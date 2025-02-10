@@ -1,0 +1,17 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>회원가입 성공</title>
+    <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet">
+</head>
+<body class="container d-flex justify-content-center align-items-center vh-100">
+    <div class="card p-4 shadow-sm text-center" style="width: 400px;">
+        <h2 class="mb-3">🎉 회원가입 진행중 ! </h2>
+        <p>이메일 인증을 완료해야 로그인할 수 있습니다.</p>
+        <p>이메일을 확인하고 인증 링크를 클릭하세요.</p>
+        <a href="{% url 'cbv_login' %}" class="btn btn-primary w-100">로그인 페이지로 이동</a>
+    </div>
+</body>
+</html>

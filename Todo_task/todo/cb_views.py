@@ -20,10 +20,12 @@ class TodoListView(LoginRequiredMixin,ListView):
     ordering = ['-created_at'] #최신순 정렬
 
     def get_queryset(self):
-        queryset = super().get_queryset().filter(user=self.request.user)
+        # 기본 적으로 로그인한 사용자의 할 일만 표시
+        queryset = Todo.objects.filter(user=self.request.user)
+        # 슈퍼유저는 모든 할일 조회
         if self.request.user.is_superuser:
-            queryset = super().get_queryset()
-
+            queryset = Todo.objects.all()
+        # 검색기능 ( q = 검색어 )
         q = self.request.GET.get('q')
         if q:
             queryset = queryset.filter(   # 검색

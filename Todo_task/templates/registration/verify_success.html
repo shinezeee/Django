@@ -1,0 +1,17 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>이메일 인증 완료</title>
+    <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet">
+</head>
+<body class="container d-flex justify-content-center align-items-center vh-100">
+    <div class="card p-4 shadow-sm text-center" style="width: 400px;">
+        <h2 class="mb-3 text-success">✅ 인증 완료!</h2>
+        <p>이메일 인증이 성공적으로 완료되었습니다.</p>
+        <p>이제 로그인하실 수 있습니다.</p>
+        <a href="{% url 'cbv_login' %}" class="btn btn-primary w-100">로그인 페이지로 이동</a>
+    </div>
+</body>
+</html>

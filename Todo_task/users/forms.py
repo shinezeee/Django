@@ -32,6 +32,7 @@ class SignupForm(UserCreationForm):
         }
 # 로그인
 class LoginForm(AuthenticationForm):
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['username'].label = "이메일"

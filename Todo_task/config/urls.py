@@ -30,7 +30,7 @@ handler404 = "todo.views.custom_404_view"
 
 urlpatterns = [
     # FBV
-    path('', todo_home, name='todo_home'),
+    path('',todo_home, name='todo_home'),
     path("todo/", todo_list, name="todo_list"),
     path("todo/create/",todo_create, name="todo_create"),
     path("todo/<int:todo_id>/",todo_info, name="todo_info"),

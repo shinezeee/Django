@@ -1,0 +1,17 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>이메일 인증 실패</title>
+    <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet">
+</head>
+<body class="container d-flex justify-content-center align-items-center vh-100">
+    <div class="card p-4 shadow-sm text-center" style="width: 400px;">
+        <h2 class="mb-3">⚠️ 인증 실패</h2>
+        <p>이메일 인증이 만료되었거나 잘못된 코드입니다.</p>
+        <p>다시 회원가입을 진행해주세요.</p>
+        <a href="{% url 'cbv_signup' %}" class="btn btn-danger w-100">회원가입 페이지로 이동</a>
+    </div>
+</body>
+</html>
