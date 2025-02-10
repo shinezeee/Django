@@ -6,14 +6,14 @@
     <title>Login</title>
     <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet">
 </head>
-<body class="container d-flex justify-content-center align-items-center vh-100">
-    <div class="card p-4 shadow-sm" style="width: 400px;">
+<body class="container d-flex justify-content-center align-items-center vh-80">
+    <div class="card p-4 shadow-sm mt-5" style="width: 400px;">
         <h2 class="text-center mb-3">🔐 로그인</h2>
         <form method="POST" action="{% url 'cbv_login' %}">
             {% csrf_token %}
 
             <div class="mb-3">
-                <label for="id_username" class="form-label">아이디</label>
+                <label for="id_username" class="form-label">이메일</label>
                 <input type="text" name="username" id="id_username" placeholder="이메일을 입력하세요." class="form-control" required>
             </div>
 

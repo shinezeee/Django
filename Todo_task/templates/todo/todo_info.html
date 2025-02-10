@@ -45,9 +45,9 @@
                     </div>
 
                     {% if comment.user == request.user or request.user.is_superuser %}
-                        <div class="d-flex gap-2">
-                            <a href="{% url 'comment_update' comment.id %}" class="btn btn-sm btn-outline-primary">수정</a>
+                        <div class="d-flex align-items-baseline gap-2">
                             <form action="{% url 'comment_delete' comment.id %}" method="post" style="display:inline;">
+                            <a href="{% url 'comment_update' comment.id %}" class="btn btn-sm btn-outline-primary">수정</a>
                                 {% csrf_token %}
                                 <button type="submit" class="btn btn-sm btn-outline-danger" onclick="return confirm('정말 삭제하시겠습니까?');">삭제</button>
                             </form>
@@ -93,7 +93,7 @@
             <button type="submit" class="btn btn-success mt-2">댓글 작성</button>
         </form>
     {% else %}
-        <p class="text-muted text-center mt-3">댓글을 작성하려면 <a href="{% url 'login' %}">로그인</a>하세요.</p>
+        <p class="text-muted text-center m-3">댓글을 작성하려면 <a href="{% url 'login' %}">로그인</a>하세요.</p>
     {% endif %}
 </div>
 {% endblock %}

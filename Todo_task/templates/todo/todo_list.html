@@ -11,18 +11,20 @@
         </form>
          <ul class="list-group ">
             {% for todo in object_list %}
-                  <li class="list-group-item list-group-item-action">
-                    <img src="{{ todo.get_thumbnail_url }}" alt="썸네일" class="rounded-circle me-3"
-                         style="width: 50px; height: 50px; object-fit: cover;"
-                         >
-                    <a href="{% url 'cb_todo_info' todo.id %}" class="text-decoration-none text-dark link-success {% if todo.is_done %}text-muted text-decoration-line-through{% endif %}">
-                        {{ todo.title }}
-                    </a>
-                {% if todo.is_done %}
-                    <span class="text-success ms-2">✅</span>
-                {% else %}
-                    <span class="text-warning ms-2">🚧</span>
-                {% endif %}
+                  <li class="list-group-item d-flex list-group-item-action">
+                    <a href="{% url 'cb_todo_info' todo.id %}" class="stretched-link"></a>
+                    <div class="thumbnail-box me-3">
+                      <img src="{{ todo.get_thumbnail_url }}" alt="썸네일" class="thumbnail-img">
+                    </div>
+                    <div class="flex-grow-1 d-flex align-items-center">
+                        {% if todo.is_done %}
+                            <span class="text-success me-2">✅</span>
+                        {% else %}
+                            <span class="text-warning me-2">🚧</span>
+                        {% endif %}
+                        <span class="text-dark link-success {% if todo.is_done %}text-muted text-decoration-line-through{% endif %}">
+                            {{ todo.title }}</span>
+                  </div>
               </li>
             {% empty %}
             <li class="list-group-item">할 일이 없습니다.</li>
@@ -31,4 +33,19 @@
             {% include 'todo/pagination.html' %}
         {%endif %}
     </div>
+    <style>
+    .thumbnail-img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+    .thumbnail-box {
+        width: 50px;
+        height: 50px;
+        overflow: hidden;
+        border-radius: 5px;
+    }
+
+    </style>
+
 {% endblock %}
